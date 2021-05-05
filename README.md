@@ -2,14 +2,20 @@
 Networking over QR Code
 
 ## Introduction
-Use a stream of QR codes to transfer data from a Unix machine to a mobile. This is a weekend hack, adjust expectations accordingly.
-The sender is a shell script which takes a file, chops it up into tiny pieces and displays each piece on the terminal for a brief interval.
-The receiver is a static website which can be loaded on a mobile. Point it to the screen of the sender, and it will capture the chunks and assemble them into a downloadable file.
+Use a stream of QR codes to transfer data from a Unix machine to a mobile. This
+is a weekend hack, adjust expectations accordingly.  The sender is a shell
+script which takes a file, chops it up into tiny pieces and displays each piece
+on the terminal for a brief interval.  The receiver is a static website which
+can be loaded on a mobile. Point it to the screen of the sender, and it will
+capture the chunks and assemble them into a downloadable file.
 
 ### Installation
 
-The sender is assumed to be a Unix machine (Linux, MacOS). On the sender, install `qrencode` using the native package manager - `yum`, `apt`, `brew` as applicable.
-The receiver is a website (no cookies, no analytics JS, no nothing) and trivially self-hostable. A sample receiver is hosted at https://ganeshv.github.io/lifi/
+The sender is assumed to be a Unix machine (Linux, MacOS). On the sender,
+install `qrencode` using the native package manager - `yum`, `apt`, `brew` as
+applicable.  The receiver is a website (no cookies, no analytics JS, no
+nothing) and trivially self-hostable. A sample receiver is hosted at
+https://ganeshv.github.io/lifi/
 
 ### Usage
 
@@ -19,14 +25,23 @@ To send, login to the machine containing the file from the terminal. Run
 bash lifi-sender.sh [-c <chunksize>] [-f <fps>] [-r <repeat>] <filename>
 ```
 
-`fps` controls how many QR codes are displayed per second. May need to reduce it for remote logins.
-`repeat` controls how many times the file is repeated. Sometimes the receiver skips a frame because of terminal glitches, and repeating ensures that the missing frame is caught the next time round. The correct way to do this is using fountain codes, out of scope for a weekend project.
+`fps` controls how many QR codes are displayed per second. May need to reduce
+it for remote logins.  `repeat` controls how many times the file is repeated.
+Sometimes the receiver skips a frame because of terminal glitches, and
+repeating ensures that the missing frame is caught the next time round. The
+correct way to do this is using fountain codes, out of scope for a weekend
+project.
 
-Reduce the font size and increase the terminal size to the point that the entire QR code is visible.
+Reduce the font size and increase the terminal size to the point that the
+entire QR code is visible.
 
-A sample receiver is hosted at https://ganeshv.github.io/lifi/ - load the page on a mobile, hit "Scan". Once all the chunks have been captured, the "Download" button turns green, and the captured file can be downloaded to the mobile.
+A sample receiver is hosted at https://ganeshv.github.io/lifi/ - load the page
+on a mobile, hit "Scan". Once all the chunks have been captured, the "Download"
+button turns green, and the captured file can be downloaded to the mobile.
 
-Transfer rates are slow, about 3-4KB per second. It is possible to improve FPS using a GUI rather than a terminal, and denser/colour based QR codes, but again, out of scope for now.
+Transfer rates are slow, about 3-4KB per second. It is possible to improve FPS
+using a GUI rather than a terminal, and denser/colour based QR codes, but
+again, out of scope for now.
 
 ## TCP/IP over QR
 
@@ -44,3 +59,10 @@ There is a tradeoff between MTU, distance between two camera/screen pairs
 and reliability.
 
 Implemented in `lifi-ppp.py`.
+
+## Credits
+
+  * [libqrencode](https://github.com/fukuchi/libqrencode) for generating QR codes
+    and printing on the terminal
+  * [QR Scanner](https://github.com/nimiq/qr-scanner) for the Javascript QR
+    reader
